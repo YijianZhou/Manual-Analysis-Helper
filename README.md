@@ -1,5 +1,5 @@
 # Manual-Analysis-Helper
-Codes for semi-automated seismological analysis (manual efforts required!) <br>
+Codes for semi-automated seismological analysis. Note that manual efforts are required! Please read the workflow in each directory for the usage. <br>
 
 Separated functions include: <br>
 1. Manual phase picking <br>
