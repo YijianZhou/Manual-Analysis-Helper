@@ -1,6 +1,7 @@
 # Manual-Analysis-Helper
-Codes for semi-automated seismological analysis (manual efforts required!) \n
-Separated functions include: \n
-1. Manual phase picking \n
-2. Source spectrum analysis \n
+Codes for semi-automated seismological analysis (manual efforts required!) <br>
+
+Separated functions include: <br>
+1. Manual phase picking <br>
+2. Source spectrum analysis <br>
 3. CC clustering
