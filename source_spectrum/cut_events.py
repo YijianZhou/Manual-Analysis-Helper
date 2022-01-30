@@ -4,15 +4,14 @@ import numpy as np
 import torch.multiprocessing as mp
 from torch.utils.data import Dataset, DataLoader
 from obspy import read, UTCDateTime
-from reader import read_fsta, read_fpha, get_data_dict, dtime2str
-from signal_lib import calc_dist_km
+from reader import read_fpha, get_data_dict, dtime2str
 import sac
 import warnings
 warnings.filterwarnings("ignore")
 
 # i/o paths
 fsta = 'input/station.csv'
-fpha = 'output/egf.pha'
+fpha = 'output/egf_org.pha'
 event_list = read_fpha(fpha)
 get_data_dict = get_data_dict
 data_dir = '/data/Example_data'
