@@ -10,12 +10,13 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # i/o paths
+opt_idx = 0 # 0 for initial cut; 1 for refined cut (after SAC ppk)
 fsta = 'input/station.csv'
-fpha = 'input/egf_org.pha'
+fpha = ['input/egf_org.pha','output/egf.pha'][opt_idx]
 event_list = read_fpha(fpha)
 get_data_dict = get_data_dict
 data_dir = '/data/Example_data'
-out_root = 'output/events_egf'
+out_root = 'input/events_egf'
 # signal process
 win_len = [10, 50] # sec before & after P
 num_workers = 0
@@ -29,7 +30,7 @@ class Cut_Events(Dataset):
     self.event_list = event_list
 
   def __getitem__(self, index):
-    if index in bad_index: return False
+    if index in bad_index and opt_idx==0: return False
     # get event info
     event_loc, pick_dict = self.event_list[index]
     ot, lat, lon, dep, mag = event_loc

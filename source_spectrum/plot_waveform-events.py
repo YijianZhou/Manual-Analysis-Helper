@@ -60,9 +60,10 @@ class Plot_Events(Dataset):
     data_dict = get_data_dict(ot, data_dir)
     sta_list = sort_sta(pick_dict)
     # plot waveform
-    fout = os.path.join(out_root,'%s_%s.pdf'%(index,event_name))
+    evid_name = '%s_%s'%(index,event_name)
+    fout = os.path.join(out_root,'%s.pdf'%evid_name)
     plt.figure(figsize=fig_size)
-    title = 'Event Waveform: %s M%s %s %s-%sHz'%(event_name, mag, chn, freq_band[0],freq_band[1])
+    title = 'Event Waveform: %s M%s %s %s-%sHz'%(evid_name, mag, chn, freq_band[0],freq_band[1])
     for ii,sta in enumerate(sta_list):
         data_path = data_dict[sta][chn_idx]
         st = read(data_path)
@@ -73,7 +74,7 @@ class Plot_Events(Dataset):
     plot_label('Time (s)',None,title)
     plt.tight_layout()
     plt.savefig(fout)
-    return '%s_%s'%(index,event_name)
+    return evid_name
 
   def __len__(self):
     return len(self.event_list)

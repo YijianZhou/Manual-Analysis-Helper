@@ -9,10 +9,9 @@ from signal_lib import calc_dist_km
 
 # i/o paths
 fctlg = 'input/all.ctlg'
-fout = 'input/egf_org.pha'
-fout = open(fout,'w')
 fsta = 'input/station.csv'
 sta_dict = read_fsta(fsta)
+fout = open('input/egf_org.pha','w')
 # selection criteria
 ot_rng = ['20210518133943.51','20210521184850.54']
 ot_rng = [UTCDateTime(ot) for ot in ot_rng]
