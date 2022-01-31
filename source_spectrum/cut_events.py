@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore")
 
 # i/o paths
 fsta = 'input/station.csv'
-fpha = 'output/egf_org.pha'
+fpha = 'input/egf_org.pha'
 event_list = read_fpha(fpha)
 get_data_dict = get_data_dict
 data_dir = '/data/Example_data'
