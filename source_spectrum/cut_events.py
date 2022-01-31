@@ -19,6 +19,7 @@ out_root = 'output/events_egf'
 # signal process
 win_len = [10, 50] # sec before & after P
 num_workers = 0
+bad_index = [] # from event waveform inspection
 
 
 class Cut_Events(Dataset):
@@ -28,6 +29,7 @@ class Cut_Events(Dataset):
     self.event_list = event_list
 
   def __getitem__(self, index):
+    if index in bad_index: return False
     # get event info
     event_loc, pick_dict = self.event_list[index]
     ot, lat, lon, dep, mag = event_loc

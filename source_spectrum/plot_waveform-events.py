@@ -60,8 +60,7 @@ class Plot_Events(Dataset):
     data_dict = get_data_dict(ot, data_dir)
     sta_list = sort_sta(pick_dict)
     # plot waveform
-    print('plot %s %s'%(index,event_name))
-    fout = os.path.join(out_root,'%s.pdf'%event_name)
+    fout = os.path.join(out_root,'%s_%s.pdf'%(index,event_name))
     plt.figure(figsize=fig_size)
     title = 'Event Waveform: %s M%s %s %s-%sHz'%(event_name, mag, chn, freq_band[0],freq_band[1])
     for ii,sta in enumerate(sta_list):
@@ -74,7 +73,7 @@ class Plot_Events(Dataset):
     plot_label('Time (s)',None,title)
     plt.tight_layout()
     plt.savefig(fout)
-    return True
+    return '%s_%s'%(index,event_name)
 
   def __len__(self):
     return len(self.event_list)
@@ -84,6 +83,5 @@ if __name__ == '__main__':
     mp.set_start_method('spawn', force=True) # 'spawn' or 'forkserver'
     dataset = Plot_Events(event_list)
     dataloader = DataLoader(dataset, num_workers=num_workers, batch_size=None)
-    for ii,_ in enumerate(dataloader):
-        print('%s/%s events done/total'%(ii,len(dataset)))
-
+    for ii,evid_name in enumerate(dataloader):
+        print('plot %s'%(evid_name))
