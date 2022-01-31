@@ -60,7 +60,7 @@ class Plot_Events(Dataset):
     data_dict = get_data_dict(ot, data_dir)
     sta_list = sort_sta(pick_dict)
     # plot waveform
-    print('plot %s'%event_name)
+    print('plot %s %s'%(index,event_name))
     fout = os.path.join(out_root,'%s.pdf'%event_name)
     plt.figure(figsize=fig_size)
     title = 'Event Waveform: %s M%s %s %s-%sHz'%(event_name, mag, chn, freq_band[0],freq_band[1])
