@@ -18,7 +18,7 @@ if not os.path.exists(out_root): os.makedirs(out_root)
 # cut params
 num_workers = 10
 win_len = [10, 30]
-freq_band = [0.5, 5] # for CC selection
+freq_band = [0.5,2] # for CC selection
 samp_rate = 100
 get_data_dict = get_data_dict
 data_format = 'sac'

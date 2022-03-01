@@ -19,7 +19,7 @@ event_list = read_fpha(fpha)
 fout = open('output/eg_tar-egf.cc','w')
 # signal process
 samp_rate = 100
-s_win = [1,5]
+s_win = [1,7]
 p_win = [1,5]
 dt_cc = 2 # pre & post
 num_workers = 10

@@ -34,7 +34,7 @@ for line in lines:
     codes = line.split(',')
     if len(codes)==5: cc_list.append([dtime2str(codes[0]),[]]); continue
     sta = codes[0]
-    cc_p, cc_s = [float(code[7:13]) for code in codes[1:3]]
+    cc_p, cc_s = [float(code) for code in codes[1:3]]
     cc_list[-1][-1].append([cc_p, cc_s])
 
 for event_name, cc_mat in cc_list:

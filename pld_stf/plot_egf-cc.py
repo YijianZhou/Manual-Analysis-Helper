@@ -11,7 +11,7 @@ from reader import dtime2str, read_fsta, read_fpha
 fsta = 'input/station_eg.csv'
 sta_dict = read_fsta(fsta)
 tar_loc = [25.6527,99.9268]
-fpha = 'input/yb_F1-egf.pha'
+fpha = 'input/eg_egf_org.pha'
 egf_list = read_fpha(fpha)
 egf_names = [dtime2str(event_loc[0]) for [event_loc, _] in egf_list]
 fcc = 'output/eg_tar-egf.cc'
@@ -48,7 +48,7 @@ for line in lines:
         event_name = dtime2str(codes[0])
         cc_dict[event_name] = {}; continue
     sta = codes[0]
-    cc_p, cc_s = [float(code[7:13]) for code in codes[1:3]]
+    cc_p, cc_s = [float(code) for code in codes[1:3]]
     cc_dict[event_name][sta] = [cc_p, cc_s]
 
 # calc cc for sta & egf
