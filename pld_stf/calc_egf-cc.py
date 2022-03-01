@@ -19,16 +19,18 @@ event_list = read_fpha(fpha)
 fout = open('output/eg_tar-egf.cc','w')
 # signal process
 samp_rate = 100
+freq_band = [0.5,2]
 s_win = [1,7]
 p_win = [1,5]
 dt_cc = 2 # pre & post
 num_workers = 10
 
 # read data
-def read_s_data(st_paths, baz, s_win):
+def read_s_data(st_paths, baz, s_win, to_prep=False):
     npts = int(samp_rate*sum(s_win))
     st = read(st_paths[1])
     st+= read(st_paths[0])
+    if to_prep: st = preprocess(st, samp_rate, freq_band)
     st = st.rotate(method='NE->RT', back_azimuth=baz)
     start_time = st[0].stats.starttime
     header = st[0].stats.sac
@@ -38,9 +40,10 @@ def read_s_data(st_paths, baz, s_win):
     if len(st.slice(t0,t1))<2: return []
     return st.slice(t0,t1).detrend('demean').detrend('linear').taper(max_percentage=0.05)[1].data[0:npts]
 
-def read_p_data(st_paths, p_win):
+def read_p_data(st_paths, p_win, to_prep=False):
     npts = int(samp_rate*sum(p_win))
     st = read(st_paths[2])
+    if to_prep: st = preprocess(st, samp_rate, freq_band)
     start_time = st[0].stats.starttime
     header = st[0].stats.sac
     tp, ts = header.t0, header.t1
@@ -48,6 +51,15 @@ def read_p_data(st_paths, p_win):
     t1 = start_time + tp + p_win[1]
     if len(st.slice(t0,t1))<1: return []
     return st.slice(t0,t1).detrend('demean').detrend('linear').taper(max_percentage=0.05)[0].data[0:npts]
+
+# read tar data
+tar_dict = {}
+for sta, [sta_lat, sta_lon,_] in sta_dict.items():
+    baz = calc_azm_deg([tar_loc[0],sta_lat], [tar_loc[1],sta_lon])[1]
+    tar_paths = sorted(glob.glob(tar_dir+'/%s*'%sta))
+    tar_p = read_p_data(tar_paths, [p_win[0]+dt_cc, p_win[1]+dt_cc], True)
+    tar_s = read_s_data(tar_paths, baz, [s_win[0]+dt_cc,s_win[1]+dt_cc], True)
+    tar_dict[sta] = [tar_p, tar_s]
 
 
 class EGF_CC(Dataset):
@@ -64,15 +76,12 @@ class EGF_CC(Dataset):
     sta_cc = []
     if abs(ot-tar_ot)<2: return event_line, []
     for sta, [sta_lat, sta_lon,_] in sta_dict.items():
-        # read tar data
-        baz = calc_azm_deg([tar_loc[0],sta_lat], [tar_loc[1],sta_lon])[1]
-        tar_paths = sorted(glob.glob(tar_dir+'/%s*'%sta))
-        tar_p = read_p_data(tar_paths, [p_win[0]+dt_cc, p_win[1]+dt_cc])
-        tar_s = read_s_data(tar_paths, baz, [s_win[0]+dt_cc,s_win[1]+dt_cc])
-        baz = calc_azm_deg([lat,sta_lat], [lon,sta_lon])[1]
+        # get tar data
+        tar_p, tar_s = tar_dict[sta]
         # read egf data
         egf_paths = sorted(glob.glob(egf_dir+'/%s*'%sta))
         if len(egf_paths)!=3: continue
+        baz = calc_azm_deg([lat,sta_lat], [lon,sta_lon])[1]
         egf_p = read_p_data(egf_paths, p_win)
         egf_s = read_s_data(egf_paths, baz, s_win)
         if len(egf_p)==0 or len(egf_s)==0: continue
