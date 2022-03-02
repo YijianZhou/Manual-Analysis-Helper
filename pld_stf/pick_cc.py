@@ -78,13 +78,13 @@ def plot_label(xlabel=None, ylabel=None, title=None, yvisible=True):
     plt.setp(ax.xaxis.get_majorticklabels(), fontsize=fsize_label)
     plt.setp(ax.yaxis.get_majorticklabels(), fontsize=fsize_label, visible=yvisible)
 
-def np2sac(data, net_sta, fout):
+def np2sac(data, net_sta, pha, fout):
     net, sta = net_sta.split('.')
     tr = Trace(data=data)
     tr.stats.sampling_rate = samp_rate
     tr.write(fout)
     sac.ch_b(fout, -dt_cc)
-    sac.ch_sta(fout, knetwk=net, kstnm=sta)
+    sac.ch_sta(fout, knetwk=net, kstnm=sta, kcmpnm=pha)
 
 
 class Pick_CC(Dataset):
@@ -118,8 +118,8 @@ class Pick_CC(Dataset):
     if not os.path.exists(sta_dir): os.makedirs(sta_dir)
     fcc_p = os.path.join(sta_dir,'cc_p.sac')
     fcc_s = os.path.join(sta_dir,'cc_s.sac')
-    np2sac(cc_p, sta, fcc_p)
-    np2sac(cc_s, sta, fcc_s)
+    np2sac(cc_p, sta, 'P', fcc_p)
+    np2sac(cc_s, sta, 'S', fcc_s)
     # save fig
     fout = os.path.join(out_root, 'cc_%s.pdf'%sta)
     fig = plt.figure(figsize=fig_size)
