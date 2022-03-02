@@ -88,7 +88,7 @@ def np2sac(data, net_sta, pha, fout):
 
 
 class Pick_CC(Dataset):
-  """ Dataset for cutting events
+  """ Dataset for CC picking (waveform alignment)
   """
   def __init__(self, sta_list):
     self.sta_list = sta_list
