@@ -134,7 +134,7 @@ class PLD(Dataset):
     tar_p = read_p_data(tar_paths, [pre_blank,p_pha_len])
     tar_s = read_s_data(tar_paths, [pre_blank,s_pha_len], baz_tar)
     egf_p = read_p_data(egf_paths, [0,p_pha_len], dt_p)
-    egf_s = read_s_data(egf_paths, [0,s_pha_len], dt_s)
+    egf_s = read_s_data(egf_paths, [0,s_pha_len], baz_egf, dt_s)
     tar_p = np.concatenate([tar_p, np.zeros(p_npts)])
     egf_p = np.concatenate([egf_p, np.zeros(p_npts+pre_npts)])
     if to_calc_p: 
