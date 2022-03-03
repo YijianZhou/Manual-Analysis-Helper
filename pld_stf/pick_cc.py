@@ -22,7 +22,7 @@ fpha = 'input/eg_egf_org.pha'
 event_dict = read_fpha_dict(fpha)
 egf_loc = event_dict[egf_name][0][1:3]
 tar_loc = [25.6527,99.9268]
-out_root = 'output/eg_egf/%s'%egf_name
+out_root = 'output/eg_tar-pld/%s'%egf_name
 if not os.path.exists(out_root): os.makedirs(out_root)
 # signal processing
 samp_rate = 100
