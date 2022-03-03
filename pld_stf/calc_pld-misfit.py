@@ -4,7 +4,6 @@ import numpy as np
 from obspy import read, UTCDateTime, Trace
 import torch.multiprocessing as mp
 from torch.utils.data import Dataset, DataLoader
-import matplotlib.pyplot as plt
 from signal_lib import preprocess, calc_azm_deg
 from reader import dtime2str, read_fsta, read_fpha_dict
 import sac
