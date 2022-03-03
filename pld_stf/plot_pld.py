@@ -193,6 +193,7 @@ class Plot_PLD(Dataset):
         fout = os.path.join(out_root, 'pld_%s.pdf'%sta)
         fout_np = os.path.join(out_root, sta, 'pld_stf_s.npy')
         st_err = read(os.path.join(out_root,sta,'pld_err_s.sac'))
+        if 't0' not in st_err[0].stats.sac: return
         T_fit = int(samp_rate * st_err[0].stats.sac.t0)
         astf, tau_c, dfit = pld(tar_s, egf_s, s_npts, T_fit)
         plot_pld(sta, 'S', tar_s, egf_s, astf, tau_c, dfit, st_err[0].data, T_fit/samp_rate, fout)
