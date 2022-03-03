@@ -26,12 +26,12 @@ if not os.path.exists(out_root): os.makedirs(out_root)
 freq_band = [1,20]
 samp_rate = 100
 num_workers = 10
+num_iter = 100
 p_pha_len, s_pha_len = 4., 6.
 pre_blank = 0.5
 pre_npts = int(np.round(pre_blank*samp_rate,1))
 p_pha_npts = int(np.round(p_pha_len*samp_rate,1))
 s_pha_npts = int(np.round(s_pha_len*samp_rate,1))
-num_iter = 100
 p_npts = p_pha_npts + pre_npts
 s_npts = s_pha_npts + pre_npts
 T1 = int(pre_blank * samp_rate)
