@@ -137,6 +137,8 @@ class PLD(Dataset):
     egf_s = read_s_data(egf_paths, [0,s_pha_len], baz_egf, dt_s)
     tar_p = np.concatenate([tar_p, np.zeros(p_npts)])
     egf_p = np.concatenate([egf_p, np.zeros(p_npts+pre_npts)])
+    tar_s = np.concatenate([tar_s, np.zeros(s_npts)])
+    egf_s = np.concatenate([egf_s, np.zeros(s_npts+pre_npts)])
     if to_calc_p: 
         stf_p, err_p = pld(tar_p, egf_p, p_npts)
         np2sac(stf_p, sta, 'P', os.path.join(out_root,sta,'pld_stf_p.sac'))
