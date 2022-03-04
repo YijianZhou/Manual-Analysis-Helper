@@ -19,7 +19,7 @@ fpha = 'input/eg_egf_org.pha'
 event_list = read_fpha(fpha)
 get_data_dict = get_data_dict
 data_dir = '/data/Example_data'
-out_root = 'input/eg_egf_org'
+out_root = 'input/eg_egf'
 # signal process
 win_len = [10, 50] # sec before & after P
 num_workers = 0

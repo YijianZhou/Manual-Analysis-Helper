@@ -1,4 +1,4 @@
-""" Selection of EGFs
+""" Make phase file with catalog. P & S arrivals are predicted
 """
 import os, sys
 sys.path.append('/home/zhouyj/software/data_prep')

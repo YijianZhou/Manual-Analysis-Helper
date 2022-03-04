@@ -1,3 +1,5 @@
+""" Cut all events (bigdata). Event waveforms are filtered  with low frequency band
+"""
 import sys, os, glob, shutil
 sys.path.append('/home/zhouyj/software/data_prep')
 import numpy as np

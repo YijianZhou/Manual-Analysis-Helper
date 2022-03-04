@@ -1,3 +1,5 @@
+""" Plot event waveforms for manual inspection of SNR
+"""
 import os, glob, sys
 sys.path.append('/home/zhouyj/software/data_prep')
 from obspy import read, UTCDateTime
@@ -18,7 +20,7 @@ get_data_dict = get_data_dict
 fpha = 'input/eg_egf_org.pha'
 event_list = read_fpha(fpha)
 chn_idx, chn = 2, 'Z'
-out_root = 'output/egf_waveform'
+out_root = 'output/eg_tar-egf_waveform'
 if not os.path.exists(out_root): os.makedirs(out_root)
 # signal process
 samp_rate = 100

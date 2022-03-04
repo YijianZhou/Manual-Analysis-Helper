@@ -13,9 +13,10 @@ from reader import dtime2str, read_fsta, read_fpha_dict
 import sac
 
 # i/o paths
-tar_dir = 'input/eg_tar/20210521212125.00'
+tar_name = '20210521212125.00'
+tar_dir = 'input/eg_tar/%s'%tar_name
 egf_name = '20210519005951.42'
-egf_dir = 'input/eg_egf_org/%s'%egf_name
+egf_dir = 'input/eg_egf/%s'%egf_name
 fsta = 'input/station_eg.csv'
 sta_dict = read_fsta(fsta)
 sta_list = list(sta_dict.keys())

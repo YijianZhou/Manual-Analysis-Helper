@@ -1,3 +1,6 @@
+""" Save CC in SAC & pdf for manual picking. 
+    CC is calculated with high frequency band to align waveforms.
+"""
 import sys, os, glob
 sys.path.append('/home/zhouyj/software/data_prep')
 import numpy as np
@@ -14,7 +17,7 @@ warnings.filterwarnings("ignore")
 # i/o paths
 egf_name = '20210519005951.42'
 tar_dir = 'input/eg_tar/20210521212125.00'
-egf_dir = 'input/eg_egf_org/%s'%egf_name
+egf_dir = 'input/eg_egf/%s'%egf_name
 fsta = 'input/station_eg.csv'
 sta_dict = read_fsta(fsta)
 sta_list = list(sta_dict.keys())

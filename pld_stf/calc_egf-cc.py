@@ -1,3 +1,5 @@
+""" Calculate CC between target eventr and all events to select EGFs 
+"""
 import sys, os, glob
 sys.path.append('/home/zhouyj/software/data_prep')
 import numpy as np

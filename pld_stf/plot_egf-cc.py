@@ -1,3 +1,5 @@
+""" Plot CC between target event and EGF for manual inspection
+"""
 import sys, os, glob
 sys.path.append('/home/zhouyj/software/data_prep')
 import numpy as np
@@ -15,7 +17,7 @@ fpha = 'input/eg_egf_org.pha'
 egf_list = read_fpha(fpha)
 egf_names = [dtime2str(event_loc[0]) for [event_loc, _] in egf_list]
 fcc = 'output/eg_tar-egf.cc'
-fout = 'output/eg_egf-cc.pdf'
+fout = 'output/eg_tar-egf-cc.pdf'
 # fig config
 fig_size = (12,8)
 fsize_label = 14
