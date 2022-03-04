@@ -8,7 +8,7 @@ from signal_lib import preprocess, calc_cc, calc_azm_deg, calc_dist_km
 from reader import dtime2str, read_fsta, read_fpha
 
 # i/o paths
-tar_dir =  'input/eg_tar/20210521212125.00'
+tar_dir = 'input/eg_tar/20210521212125.00'
 tar_loc = [25.6527,99.9268]
 tar_ot = UTCDateTime(tar_dir.split('/')[-1])
 egf_root = '/data/bigdata/Example_events'

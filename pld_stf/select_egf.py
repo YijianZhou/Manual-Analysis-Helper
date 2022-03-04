@@ -16,7 +16,7 @@ fsta = 'input/station_eg.csv'
 sta_dict = read_fsta(fsta)
 # selection criteria
 cc_min = 0.5
-min_sta = 5
+min_sta = 8
 
 # make event dict
 event_dict = {}
