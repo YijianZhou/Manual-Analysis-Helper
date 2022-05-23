@@ -1,11 +1,10 @@
 import sys, glob, os
-sys.path.append('/home/zhouyj/software/data_prep')
 from obspy import read, UTCDateTime
 from reader import dtime2str
 
 # i/o paths
-fpha = 'input/eg_init.pha'
-fout = open('output/eg_man.pha','w')
+fpha = 'input/eg_org.pha'
+fout = open('output/eg_man.pha','w') # only pick lines are changed
 event_root = 'input/eg_events'
 
 f=open(fpha); lines=f.readlines(); f.close()
@@ -24,6 +23,7 @@ for line in lines:
         net, sta = fname.split('.')[0:2]
         net_sta = '%s.%s'%(net,sta)
         header = st[0].stats.sac
+        if 't2' in header: continue
         t0 = st[0].stats.starttime
         tp = t0 + header.t0 
         ts = t0 + header.t1 

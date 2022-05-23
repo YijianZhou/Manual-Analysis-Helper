@@ -1,22 +1,23 @@
-import os, sys, glob, shutil
+import os, sys, glob
 sys.path.append('/home/zhouyj/software/data_prep')
 import numpy as np
 import multiprocessing as mp
 from obspy import read, UTCDateTime
-from reader import read_fpha, get_yb_data, dtime2str
+from reader import read_fpha, get_data_dict, dtime2str
 import sac
 
 # i/o paths
-fpha = 'input/eg_init.pha'
-get_data_dict = get_yb_data
-data_dir = '/data/Example'
+fpha = 'input/eg_org.pha'
+get_data_dict = get_data_dict
+data_dir = '/data/Example_data'
 out_root = 'input/eg_events'
-pha_list = read_fpha(fpha)
+event_list = read_fpha(fpha)
 event_win = [10, 40] # sec before & after P
+num_workers = 2
 
-def cut_event(event_id):
+def cut_event(evid):
     # get event info
-    [event_loc, pick_dict] = pha_list[event_id]
+    [event_loc, pick_dict] = event_list[evid]
     ot, lat, lon, dep, mag = event_loc
     data_dict = get_data_dict(ot, data_dir)
     event_name = dtime2str(ot)
@@ -36,6 +37,9 @@ def cut_event(event_id):
         tn['t0'] = event_win[0]
         if ts!=-1: tn['t1'] = ts - tp + event_win[0]
         sac.ch_event(out_path, lat, lon, dep, mag, tn)
-# cut all events data
-for evid in range(len(pha_list)): cut_event(evid)
 
+# cut all events data
+pool = mp.Pool(num_workers)
+pool.map_async(cut_event, range(len(event_list)))
+pool.close()
+pool.join()
