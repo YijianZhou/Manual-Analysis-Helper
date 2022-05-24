@@ -7,3 +7,4 @@ Note that manual efforts are required! Please read the workflow in each director
 - Repeater detection  
 - CC clustering  
 - Source spectrum analysis  
+- EGF deconvolution  
