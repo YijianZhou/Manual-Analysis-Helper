@@ -23,9 +23,10 @@ for line in lines:
         net, sta = fname.split('.')[0:2]
         net_sta = '%s.%s'%(net,sta)
         header = st[0].stats.sac
-        if 't2' in header: continue
         t0 = st[0].stats.starttime
-        tp = t0 + header.t0 
-        ts = t0 + header.t1 
+        if 't2' in header: tp=-1
+        else: tp = t0 + header.t0 
+        if 't3' in header: ts=-1
+        else: ts = t0 + header.t1 
         fout.write('%s,%s,%s\n'%(net_sta, tp, ts))
 fout.close()
