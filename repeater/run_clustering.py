@@ -76,7 +76,7 @@ print('%s clusters found'%len(clusters))
 
 # write clusters
 for i,cluster in enumerate(clusters):
-    print('write %sth cluster'%i)
+    print('writing cluster %s'%i)
     out_clust.write('# cluster %s \n'%i)
     cluster = np.unique(cluster)
     for idx in cluster: 

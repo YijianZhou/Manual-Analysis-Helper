@@ -4,11 +4,11 @@
 class Config(object):
   def __init__(self):
 
-    self.temp_pha = 'input/eg_repeater_org_full.pha'  # repeater candidates selected from initial MESS detections
+    self.temp_pha = 'input/eg_rep_org_full.pha'  # repeater candidates selected from initial MESS detections
     self.det_pha = 'input/eg_mess-rep.pha'  # run MESS on repeater candidates
-    self.fctlg_reloc = 'input/eg_mess_cc.ctlg'  # final relocated MESS catalog
+    self.fctlg = 'input/eg_mess_cc.ctlg'  # final relocated MESS catalog
     self.fsta = 'input/station_eg.csv'
-    self.ctlg_code = 'eg_repeater'
+    self.ctlg_code = 'eg_rep'
     self.time_range = '20210501-20210530'
     self.num_workers = 29
     self.evid_stride = 100000

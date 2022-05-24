@@ -183,7 +183,7 @@ if __name__ == '__main__':
   cfg = config.Config()
   temp_loc_dict = read_temp_pha(cfg.temp_pha)
   det_pha = cfg.det_pha
-  event_list = read_fctlg(cfg.fctlg_reloc)
+  event_list = read_fctlg(cfg.fctlg)
   sta_dict = read_fsta(cfg.fsta)
   for fname in glob.glob('input/dt_*.cc'): os.unlink(fname)
   for fname in glob.glob('input/phase_*.csv'): os.unlink(fname)
