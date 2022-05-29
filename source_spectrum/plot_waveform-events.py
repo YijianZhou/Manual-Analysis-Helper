@@ -1,28 +1,26 @@
-import os, glob, sys
-sys.path.append('/home/zhouyj/software/data_prep')
+import os, glob
 from obspy import read, UTCDateTime
 import numpy as np
 import torch.multiprocessing as mp
 from torch.utils.data import Dataset, DataLoader
 import matplotlib.pyplot as plt
 from signal_lib import preprocess
-from reader import read_fpha, read_fsta, dtime2str, get_data_dict
+from reader import read_fpha, read_fsta, dtime2str
 import warnings
 warnings.filterwarnings("ignore")
 
 # i/o paths
-fsta = 'input/station.csv'
+event_root = 'input/eg_egf'
+fsta = 'input/eg_station.csv'
 sta_dict = read_fsta(fsta)
-data_dir = '/data/Example_data'
-get_data_dict = get_data_dict
-fpha = 'input/egf_org.pha'
+fpha = 'output/eg_egf.pha'
 event_list = read_fpha(fpha)
 chn_idx, chn = 2, 'Z'
 out_root = 'output/waveform-fig_egf'
 if not os.path.exists(out_root): os.makedirs(out_root)
 # signal process
 samp_rate = 100
-win_len = [0,80]
+win_len = [5,25]
 npts = int(samp_rate * sum(win_len))
 time = -win_len[0] + np.arange(npts) / samp_rate
 freq_band = [1,20]
@@ -54,10 +52,10 @@ class Plot_Events(Dataset):
     self.event_list = event_list
 
   def __getitem__(self, index):
-    event_loc, pick_dict = event_list[index]
+    event_loc, pick_dict = self.event_list[index]
     ot, _,_,_, mag = event_loc
     event_name = dtime2str(ot)
-    data_dict = get_data_dict(ot, data_dir)
+    event_dir = os.path.join(event_root, event_name)
     sta_list = sort_sta(pick_dict)
     # plot waveform
     evid_name = '%s_%s'%(index,event_name)
@@ -65,9 +63,10 @@ class Plot_Events(Dataset):
     plt.figure(figsize=fig_size)
     title = 'Event Waveform: %s M%s %s %s-%sHz'%(evid_name, mag, chn, freq_band[0],freq_band[1])
     for ii,sta in enumerate(sta_list):
-        data_path = data_dict[sta][chn_idx]
-        st = read(data_path)
-        st = preprocess(st.slice(ot-win_len[0], ot+win_len[1]), samp_rate, freq_band)
+        st_path = sorted(glob.glob('%s/%s.*'%(event_dir, sta)))[chn_idx]
+        st = read(st_path)
+        tp = pick_dict[sta][0]
+        st = preprocess(st.slice(tp-win_len[0], tp+win_len[1]), samp_rate, freq_band)
         st_data = st.normalize()[0].data[0:npts] + ii*2
         plt.plot(time, st_data, lw=line_wid)
     plt.yticks(np.arange(len(sta_list))*2, sta_list, fontsize=fsize_label)

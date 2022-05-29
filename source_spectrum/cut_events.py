@@ -1,27 +1,26 @@
-import os, sys, glob, shutil
-sys.path.append('/home/zhouyj/software/data_prep')
+import os, sys, glob
 import numpy as np
 import torch.multiprocessing as mp
 from torch.utils.data import Dataset, DataLoader
 from obspy import read, UTCDateTime
-from reader import read_fpha, get_data_dict, dtime2str
+from reader import read_fsta, read_fpha, get_data_dict, dtime2str
+sys.path.append('/home/zhouyj/software/data_prep')
 import sac
 import warnings
 warnings.filterwarnings("ignore")
 
 # i/o paths
-opt_idx = 0 # 0 for initial cut; 1 for refined cut (after SAC ppk)
-fsta = 'input/station.csv'
-fpha = ['input/egf_org.pha','output/egf.pha'][opt_idx]
+idx = 0
+fsta = 'input/eg_station.csv'
+fpha = ['input/eg_tar.pha','input/eg_egf_org.pha'][idx]
+out_root = ['input/eg_tar','input/eg_egf'][idx]
 event_list = read_fpha(fpha)
 get_data_dict = get_data_dict
-data_dir = '/data/Example_data'
-out_root = 'input/events_egf'
+data_dir = '/data/Continuous_data'
 # signal process
-win_len = [10, 50] # sec before & after P
-num_workers = 0
-bad_index = [] # from event waveform inspection
-
+win_len = [20, 40] # sec before & after P
+num_workers = 5
+bad_index = [] # from event waveform & CC inspection
 
 class Cut_Events(Dataset):
   """ Dataset for cutting templates
@@ -30,7 +29,7 @@ class Cut_Events(Dataset):
     self.event_list = event_list
 
   def __getitem__(self, index):
-    if index in bad_index and opt_idx==0: return False
+    if index in bad_index: return False
     # get event info
     event_loc, pick_dict = self.event_list[index]
     ot, lat, lon, dep, mag = event_loc
@@ -61,3 +60,4 @@ if __name__ == '__main__':
     dataloader = DataLoader(dataset, num_workers=num_workers, batch_size=None)
     for ii,_ in enumerate(dataloader):
         print('%s/%s events done/total'%(ii,len(dataset)))
+
