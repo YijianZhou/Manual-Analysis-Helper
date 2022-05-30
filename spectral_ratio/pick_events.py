@@ -20,12 +20,15 @@ samp_rate = 100
 freq_band = [1,20]
 num_workers = 10
 dt_pick = 1.5 # sec pre & post
-win_sta = [0.8, 1] # for P & S
-win_lta = [2, 2]
+win_sta = [1., 1] # for P & S
+win_lta = [4., 2]
 win_sta_npts = [int(samp_rate*win) for win in win_sta]
 win_lta_npts = [int(samp_rate*win) for win in win_lta]
-min_snr = 9 # defined by energy
+min_snr = [5, 10] # defined by energy
 
+
+def mark_st(st_paths):
+    for st_path in st_paths: sac.ch_event(st_path, tn={'t2':0})
 
 def calc_sta_lta(data, win_lta_npts, win_sta_npts):
     npts = len(data)
@@ -59,18 +62,19 @@ class Pick_Events(Dataset):
     for sta, [tp0, ts0] in pick_dict.items():
         # read data
         st_paths = sorted(glob.glob('%s/%s.*'%(event_dir, sta)))
-        if not len(st_paths)==3: continue
+        if not len(st_paths)==3: mark_st(st_paths); continue
         st  = read(st_paths[0])
         st += read(st_paths[1])
         st += read(st_paths[2])
         st = preprocess(st, samp_rate, freq_band)
-        if not len(st_paths)==3: continue
+        if not len(st_paths)==3: mark_st(st_paths); continue
         # refine P & S pick
         st_p = st.slice(tp0-win_lta[0]-dt_pick, tp0+win_sta[0]+dt_pick)
-        data_p = st_p[2].data**2
-        cf_p = calc_sta_lta(data_p, win_lta_npts[0], win_sta_npts[0])
-        if np.amax(cf_p)<min_snr: continue
-        dt_p = np.argmax(cf_p)/samp_rate - dt_pick - win_lta[0]
+        data_p = np.array([tr.data**2 for tr in st_p]) 
+        cf_p = [calc_sta_lta(data, win_lta_npts[0], win_sta_npts[0]) for data in data_p]
+        snr_p = [np.amax(cf) for cf in cf_p]
+        if min(snr_p)<min_snr[0] or max(snr_p)<min_snr[1]: mark_st(st_paths); continue
+        dt_p = np.argmax(cf_p[2])/samp_rate - dt_pick - win_lta[0]
         tp = tp0 + dt_p
         st_s = st.slice(ts0-win_lta[1]-dt_pick, ts0+win_sta[1]+dt_pick)
         data_s = st_s[1].data**2 + st_s[2].data**2
