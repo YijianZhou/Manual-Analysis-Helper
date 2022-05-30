@@ -33,7 +33,6 @@ subplot_rect = {'left':0.08, 'right':0.9, 'bottom':0.08, 'top':0.95, 'wspace':0.
 sta_list = []
 dtype = [('sta','O'),('dist','O')]
 for sta, sta_loc in sta_dict.items():
-#    if sta[0:2] in ['PB','NN']: continue #TODO
     dist = calc_dist_km([sta_loc[0],tar_loc[0]], [sta_loc[1],tar_loc[1]])
     sta_list.append((sta,dist))
 sta_list = np.array(sta_list, dtype=dtype)
