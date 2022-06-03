@@ -1,5 +1,4 @@
 import sys, os, glob
-sys.path.append('/home/zhouyj/software/data_prep')
 import numpy as np
 from obspy import read, UTCDateTime
 import matplotlib as mpl
@@ -10,7 +9,9 @@ from reader import dtime2str, read_fsta, read_fpha
 # i/o paths
 fsta = 'input/eg_station.csv'
 sta_dict = read_fsta(fsta)
-tar_loc = [35.6623, -117.524]
+tar_idx = 0
+tar_pha = 'input/eg_tar.pha'
+tar_loc = read_fpha(tar_pha)[tar_idx][0][1:3]
 fpha = 'input/eg_egf_org.pha'
 egf_list = read_fpha(fpha)
 egf_names = [dtime2str(event_loc[0]) for [event_loc, _] in egf_list]
