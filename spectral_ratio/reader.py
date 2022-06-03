@@ -73,3 +73,16 @@ def dtime2str(dtime):
     time = ''.join(str(dtime).split('T')[1].split(':'))[0:9]
     return date + time
 
+def read_fcc(fcc):
+    cc_dict = {}
+    f=open(fcc); lines=f.readlines(); f.close()
+    for line in lines:
+        codes = line.split(',')
+        if len(codes)>3:
+            egf_name = dtime2str(UTCDateTime(codes[0]))
+            cc_dict[egf_name] = []
+        else:
+            sta = codes[0]
+            cc_p, cc_s = [float(code) for code in codes[1:3]]
+            cc_dict[egf_name].append([sta, cc_p, cc_s])
+    return cc_dict
