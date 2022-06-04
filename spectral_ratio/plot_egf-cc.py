@@ -80,6 +80,7 @@ for ii in range(num_sta):
     color = [cmap(cc) for cc in cc_s[ii]]
     plt.scatter(np.arange(num_egf), np.ones(num_egf)*ii, np.ones(num_egf)*mark_size, marker='s', color=color)
 plt.xticks(np.arange(0,num_egf,2))
+plt.yticks(np.arange(num_sta), ['']*num_sta, fontsize=fsize_label)
 plot_label('EGF Index',None,'S-wave CC',False)
 cbar_ax = fig.add_axes(cbar_pos)
 cbar = mpl.colorbar.ColorbarBase(cbar_ax, cmap=cmap)
