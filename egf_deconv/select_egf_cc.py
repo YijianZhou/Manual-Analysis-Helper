@@ -12,8 +12,8 @@ fsta = 'input/eg_station.csv'
 sta_dict = read_fsta(fsta)
 fout = open('output/eg_egf.pha','w')
 # selection criteria
-cc_min = 0.5
-min_sta = 6 # min(cc_p, cc_s)>cc_min counts
+cc_min = 0.6
+min_sta = 8 # min(cc_p, cc_s)>cc_min counts
 
 # make event dict
 event_dict = {}

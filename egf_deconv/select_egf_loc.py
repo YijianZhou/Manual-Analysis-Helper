@@ -8,9 +8,9 @@ fsta = 'input/eg_station.csv'
 sta_dict = read_fsta(fsta)
 fout = open('input/eg_egf_org.pha','w')
 # selection criteria
-ot_rng = ['20190705110753.04','20190710']
+ot_rng = ['2019-07-04T17:33:49.000000Z','20190710']
 ot_rng = [UTCDateTime(ot) for ot in ot_rng]
-mag_rng = [2.8,4.3]
+mag_rng = [[2.8,4.3],[3.5,3.9]][1]
 lat_rng = [35.74,35.78]
 lon_rng = [-117.6,-117.55]
 dep_rng = [0,12]
