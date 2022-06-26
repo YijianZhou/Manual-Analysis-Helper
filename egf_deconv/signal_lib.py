@@ -28,7 +28,6 @@ def preprocess(stream, samp_rate, freq_band):
     else:
         print('filter type not supported!'); return []
 
-
 def calc_dist_km(lat, lon):
     cos_lat = np.cos(np.mean(lat) * np.pi / 180)
     dx = cos_lat * (lon[1] - lon[0])
