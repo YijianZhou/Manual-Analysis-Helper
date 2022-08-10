@@ -7,11 +7,11 @@ import config
 
 # i/o paths
 cfg = config.Config()
+fcc = 'input/dt.cc'
 fpha = 'input/phase.csv'
 out_pha = open('output/%s.pha'%cfg.ctlg_code,'w')
 out_pha_full = open('output/%s_full.pha'%cfg.ctlg_code,'w')
 out_clust = open('output/%s.clust'%cfg.ctlg_code,'w')
-fcc = 'input/dt.cc'
 
 # assoc MESS detections
 os.system('python mk_dt.py')
