@@ -4,8 +4,7 @@
 class Config(object):
   def __init__(self):
 
-    # 0 - initial detection; 1 - final detection
-    idx = 1
+    idx = 1 # 0 - initial detection; 1 - final detection
     self.temp_pha = ['input/eg_pal_hyp_full.pha','input/eg_rep-org_full.pha'][idx]
     self.det_pha = ['input/eg_mess.pha','input/eg_mess-rep.pha'][idx] 
     self.fctlg = 'input/eg_mess_cc.ctlg'  # final relocated MESS catalog
