@@ -35,18 +35,18 @@ for line in lines:
     if line[0]!='#': continue
     evid_list += codes[1:3]
 evid_list = np.unique(evid_list)
+evid_dict = {} # get index with evid 
+for ii,evid in enumerate(evid_list): evid_dict[evid] = ii
 # write phase
 for ii,evid in enumerate(evid_list):    
     event_line, phase_lines = event_dict[evid]
     out_pha.write(event_line)
-    out_pha_full.write(event_line[:-1]+',%s\n'%ii)
+    out_pha_full.write(event_line[:-1]+',%s\n'%evid)
     for phase_line in phase_lines: 
         out_pha.write(phase_line)
         out_pha_full.write(phase_line)
 # build corr_mat
 num_events = len(evid_list)
-evid_dict = {}
-for ii,evid in enumerate(evid_list): evid_dict[evid] = ii
 corr_mat = np.zeros([num_events, num_events])
 for line in lines:
     codes = line.split()
