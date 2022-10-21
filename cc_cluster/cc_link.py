@@ -28,6 +28,7 @@ loc_dev_thres = cfg.loc_dev_thres[0] # max dev loc
 dep_dev_thres = cfg.dep_dev_thres[0] # max dev dep
 dist_thres = cfg.dist_thres[0] # max epi-dist
 num_sta_thres = cfg.num_sta_thres[0] # min sta
+max_nbr = cfg.num_nbr_thres[1] 
 temp_mag = cfg.temp_mag
 temp_sta = cfg.temp_sta
 # data prep
@@ -113,9 +114,18 @@ class Get_Neighbor(Dataset):
     # 2. select by shared sta
     sta_lists = self.loc_sta_list[cond_loc]['sta']
     cond_sta = [len(np.intersect1d(sta_list, sta_ref)) >= num_sta_thres for sta_list in sta_lists]
-    # 3. to pair index
+    # 3. select to maximum num of neighbor
+    sub_list = self.loc_sta_list[cond_loc][cond_sta]
+    if len(sub_list)==0: return np.array([], dtype=np.int)
+    dist_lat = 111*abs(sub_list['lat']-lat)
+    dist_lon = 111*abs(sub_list['lon']-lon)*cos_lat
+    dist_dep = abs(sub_list['dep']-dep)
+    dist_list = (dist_lat**2 + dist_lon**2 + dist_dep**2)**0.5
+    dist_thres = np.sort(dist_list)[0:max_nbr+1][-1]
+    cond_nbr = dist_list<=dist_thres
+    # 4. to pair index
     pair_list = []
-    evid_list = np.arange(num_events)[cond_loc][cond_sta]
+    evid_list = np.arange(num_events)[cond_loc][cond_sta][cond_nbr]
     for evid in evid_list:
         if evid==index: continue
         evid1, evid2 = np.sort([evid, index])

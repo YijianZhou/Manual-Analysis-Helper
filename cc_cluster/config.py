@@ -17,7 +17,7 @@ class Config(object):
     self.dep_dev_thres = [5,5] # km, maximum dep separation
     self.dist_thres = [150,150] # km, max epicentral dist
     self.num_sta_thres = [3,3] # min sta_num for one event pair
-    self.min_nbr = 3
+    self.num_nbr_thres = [3,200]
     self.temp_mag = 0.    # min mag for templates
     self.temp_sta = 4    # min sta_num for templates
     # data prep
