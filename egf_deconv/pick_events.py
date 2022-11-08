@@ -43,6 +43,7 @@ def calc_sta_lta(data, win_lta_npts, win_sta_npts):
     lta[win_lta_npts:]  = data_cum[win_lta_npts:] - data_cum[:-win_lta_npts]
     lta /= win_lta_npts
     sta_lta = sta/lta
+    sta_lta[0:win_lta_npts] = 0.
     sta_lta[np.isinf(sta_lta)] = 0.
     sta_lta[np.isnan(sta_lta)] = 0.
     return sta_lta
