@@ -8,7 +8,7 @@ fcc = 'output/eg_tar-egf.cc'
 cc_dict = read_fcc(fcc)
 fpha = 'input/eg_egf_org.pha'
 event_list = read_fpha(fpha)
-fsta = 'input/eg_station.csv'
+fsta = 'input/station_eg.csv'
 sta_dict = read_fsta(fsta)
 fout = open('output/eg_egf.pha','w')
 # selection criteria

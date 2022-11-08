@@ -7,7 +7,7 @@ from signal_lib import calc_dist_km
 from reader import dtime2str, read_fsta, read_fpha
 
 # i/o paths
-fsta = 'input/eg_station.csv'
+fsta = 'input/station_eg.csv'
 sta_dict = read_fsta(fsta)
 tar_idx = 0
 tar_pha = 'input/eg_tar.pha'

@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore")
 
 # i/o paths
 idx = 0
-fsta = 'input/eg_station.csv'
+fsta = 'input/station_eg.csv'
 fpha = ['input/eg_tar.pha','input/eg_egf_org.pha'][idx]
 out_root = ['input/eg_tar','input/eg_egf'][idx]
 event_list = read_fpha(fpha)

@@ -4,7 +4,7 @@ from reader import dtime2str, read_fsta, read_fctlg, slice_ctlg
 
 # i/o paths
 fctlg = 'input/eg_all.ctlg'
-fsta = 'input/eg_station.csv'
+fsta = 'input/station_eg.csv'
 sta_dict = read_fsta(fsta)
 fout = open('input/eg_egf_org.pha','w')
 # selection criteria
