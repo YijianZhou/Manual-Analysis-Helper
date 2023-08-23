@@ -12,13 +12,14 @@ def preprocess(stream, samp_rate, freq_band):
     st = stream.slice(start_time, end_time)
     npts = min([len(tr) for tr in st])
     for tr in st: tr.data = tr.data[0:npts]
-    # resample data
-    st = st.detrend('demean').detrend('linear').taper(max_percentage=0.05, max_length=10.)
-    org_rate = st[0].stats.sampling_rate
-    if org_rate!=samp_rate: st = st.resample(samp_rate)
+    # remove nan & inf
     for tr in st:
         tr.data[np.isnan(tr.data)] = 0
         tr.data[np.isinf(tr.data)] = 0
+    # resample 
+    st = st.detrend('demean').detrend('linear').taper(max_percentage=0.05, max_length=10.)
+    org_rate = st[0].stats.sampling_rate
+    if org_rate!=samp_rate: st = st.resample(samp_rate)
     # filter
     freq_min, freq_max = freq_band
     if freq_min and freq_max:
