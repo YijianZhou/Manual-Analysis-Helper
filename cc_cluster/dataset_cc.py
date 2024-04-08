@@ -176,7 +176,9 @@ def calc_norm(data, npts):
 # obspy stream --> np.array
 def st2np(stream, npts):
     st_np = np.zeros([len(stream), npts])
-    for i,trace in enumerate(stream): st_np[i][0:npts] = trace.data[0:npts]
+    for i,trace in enumerate(stream):
+        if len(trace.data)<npts: st_np[i][0:len(trace.data)] = trace.data
+        else: st_np[i][0:npts] = trace.data[0:npts]
     return st_np
 
 def dtime2str(dtime):
