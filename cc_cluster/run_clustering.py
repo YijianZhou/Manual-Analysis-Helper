@@ -40,7 +40,7 @@ for line in lines:
 num_nbr = np.zeros(num_events)
 for ii in range(num_events):
     num_nbr[ii] = sum(link_mat[ii] + link_mat[:,ii])
-evid_list = evid_list[num_nbr>=cfg.num_nbr_thres[1]]
+evid_list = evid_list[num_nbr>=cfg.num_nbr_thres[0]]
 evid_dict = {}
 for ii,evid in enumerate(evid_list): evid_dict[evid] = ii
 # write phase
