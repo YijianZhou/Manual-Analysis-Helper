@@ -1,5 +1,4 @@
-import os, sys, glob
-sys.path.append('/home/zhouyj/software/data_prep')
+import os, glob
 import numpy as np
 import multiprocessing as mp
 from obspy import read, UTCDateTime
